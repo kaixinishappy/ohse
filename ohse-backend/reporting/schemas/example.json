@@ -1,0 +1,56 @@
+{"data": {
+  "incidents": {
+    "business_unit": "Construction Division",
+    "site_name": "Sunway Velocity Site A",
+    "date_of_incident": "2025-07-30",
+    "time_of_incident": "14:30:00",
+    "location": "Scaffolding Area, Level 3",
+    "description": "Worker slipped and fell while climbing the scaffold due to a loose plank.",
+    "incident_type": "Other",
+    "other_incident_type": "Chemical Exposure",
+    "incident_category": "Other",
+    "other_incident_category": "Minor Fire Hazard",
+    "nature_of_injury": "Other",
+    "other_nature_of_injury": "Mild chemical burns on hand",
+    "injured_body_part": "Other",
+    "other_injured_body_part": "Wrist",
+    "injured_diagram": {
+      "image_url": "https://example.com/images/body-diagram.png",
+      "marker_position": {
+        "x": 0.45,
+        "y": 0.6
+      }
+    }
+  },
+  "injuredPersons": {
+    "name": "Ali bin Ahmad",
+    "designation": "Site Worker",
+    "department": "Operations",
+    "age": 34,
+    "immediate_supervisor": "Encik Hassan",
+    "employment_type": "Other",
+    "employment_type_other": "Freelancer",
+    "period_work_in_sunway": "1-3 years",
+    "employment_start_date": "2022-06-01",
+    "engaged_in_performing_task_related_to_incident": "Yes, he was installing support frames when the incident happened.",
+    "period_task_related_to_incident": "1-3 years",
+    "shift_schedule": true,
+    "shift_schedule_time": "afternoon"
+  },
+  "medicalInfo": {
+    "hospital": "Sunway Medical Centre",
+    "med_cert_start_date": "2025-07-31",
+    "med_cert_end_date": "2025-08-02",
+    "med_cert_days": 3,
+    "ward_admitted_start_date": "2025-07-30",
+    "ward_admitted_end_date": "2025-08-01",
+    "ward_admitted_days": 2,
+    "disability": "Non-Permanent Disability"
+  },
+  "witnessInfo": {
+    "name": "Lim Wei Sheng",
+    "designation": "Foreman",
+    "witness_statement": "I saw the injured worker lose balance while reaching for a tool. The surface appeared slippery."
+  }
+}
+}

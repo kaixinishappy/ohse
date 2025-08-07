@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "title": "EnquiryForm",
+  "type": "object",
+  "required": [
+    "requestor_title",
+    "requestor_name",
+    "requestor_contact",
+    "requestor_department",
+    "requestor_company",
+    "requestor_location",
+    "requestor_email",
+    "summary",
+    "description"
+  ],
+  "properties": {
+    "requestor_title": { "type": "string", "minLength": 1 },
+    "requestor_name": { "type": "string", "minLength": 1 },
+    "requestor_contact": { "type": "string", "minLength": 10 },
+    "requestor_department": { "type": "string", "minLength": 1 },
+    "requestor_company": { "type": "string", "minLength": 1 },
+    "requestor_location": { "type": "string", "minLength": 1 },
+    "requestor_email": { "type": "string", "format": "email", "minLength": 1 },
+    "summary": { "type": "string", "minLength": 10 },
+    "description": { "type": "string", "minLength": 10 }
+  }
+}
