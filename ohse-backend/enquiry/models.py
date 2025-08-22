@@ -3,35 +3,30 @@ import os
 from django.db import models
 from django.contrib.auth import get_user_model
 
-from .validators import EnquirySchemaValidator # Custom validator
-
 User = get_user_model()
 
 class Enquiry(models.Model):
     STATUS_CHOICES = [
-        ('pending', 'Pending'),
-        ('in_progress', 'Working In Progress'),
-        ('pending_support', 'Pending Support From OHSE'),
-        ('closed', 'Closed'),
+        ('pending_support', 'Pending Support From OHSE'), # Status once submitted
+        ('in_progress', 'Working In Progress'), # Status once GOHSE Team/Manager is viewing
+        ('closed', 'Closed'), # Status once the enquiry is resolved
     ]
 
-    enquiry_id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False
-    )
-
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    # 001, 002, ...
-    # enquiry_id = models.CharField(
-    #     max_length=3,
-    #     unique=True,
+    # enquiry_id = models.UUIDField(
+    #     primary_key=True,
+    #     default=uuid.uuid4,
     #     editable=False
     # )
 
+    enquiry_id = models.CharField(
+        max_length=3,
+        unique=True,
+        editable=False,
+        primary_key=True
+    )
+
     # Input based on defined JSON schema
-    enquiry_form = models.JSONField(validators=[EnquirySchemaValidator])
+    enquiry_form = models.JSONField()
 
     # Multiple images
     images = models.ManyToManyField(
@@ -63,15 +58,18 @@ class Enquiry(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    # Approver (assigned later)
-    # goshe_manager = models.ForeignKey(
-    #     User,
-    #     on_delete=models.SET_NULL,
-    #     null=True, blank=True,
-    #     related_name="approved_enquiries"
-    # )
+    def save(self, *args, **kwargs):
+        if not self.enquiry_id:
+            last = Enquiry.objects.order_by('-enquiry_id').first()
+            if last and last.enquiry_id.isdigit():
+                next_id = int(last.enquiry_id) + 1
+            else:
+                next_id = 1
+            self.enquiry_id = f"{next_id:03d}"
+        super().save(*args, **kwargs)
 
-    # goshe_comment = models.TextField(blank=True, null=True)
+    def __str__(self):
+        return f"Enquiry {self.enquiry_id} - {self.status}"
 
 class EnquiryImage(models.Model):
     image = models.ImageField(upload_to="media/enquiries/images/")
@@ -92,3 +90,16 @@ class EnquiryAttachment(models.Model):
     def __str__(self):
         return os.path.basename(self.file.name) if self.file else "No File(s) Uploaded"
 
+
+# Comment section for by GOHSE Team/Manager if they reject the enquiry
+class EnquiryComment(models.Model):
+    enquiry = models.ForeignKey('Enquiry', on_delete=models.CASCADE, related_name='enquiry_comments')
+    approver = models.ForeignKey(User, on_delete=models.CASCADE)  # Approver who comments
+
+    comment = models.TextField(max_length=500)
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Comment by {self.approver.username} on {self.enquiry.enquiry_id}"
+    
