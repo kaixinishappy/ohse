@@ -6,8 +6,8 @@
     "incidents": {
       "type": "object",
       "required": [
-        "business_unit", "site_name", "date_of_incident", "time_of_incident", "location",
-        "description", "incident_type", "incident_category", "nature_of_injury",
+        "business_unit", "site_name", "date_of_incident", "time_of_incident", "location_of_incident",
+        "description_of_incident", "incident_type", "incident_category", "nature_of_injury",
         "injured_body_part", "injured_diagram"
       ],
       "properties": {
@@ -15,8 +15,8 @@
         "site_name": { "type": "string", "minLength": 1 },
         "date_of_incident": { "type": "string", "format": "date", "minLength": 1 },
         "time_of_incident": { "type": "string", "format": "time", "minLength": 1 },
-        "location": { "type": "string", "minLength": 1 },
-        "description": { "type": "string", "minLength": 1 },
+        "location_of_incident": { "type": "string", "minLength": 1 },
+        "description_of_incident": { "type": "string", "minLength": 1 },
 
         "incident_type": {
           "type": "string",
@@ -186,7 +186,18 @@
         "designation": { "type": "string", "minLength": 1 },
         "witness_statement": { "type": "string", "minLength": 1 }
       }
+    },
+
+    "reporterInfo": {
+      "type": "object",
+      "required": ["name", "designation", "employment_start_date"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "designation": { "type": "string", "minLength": 1 },
+        "employment_start_date": { "type": "string", "format": "date", "minLength": 1 }
+      }
     }
   },
-  "required": ["incidents", "injuredPersons", "medicalInfo", "witnessInfo"]
+  "required": ["incidents", "injuredPersons", "medicalInfo", "witnessInfo"],
+  "additionalProperties": false
 }

@@ -37,7 +37,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'investigations'
+    "django_json_widget",
+    'rest_framework',
+
+    'enquiry',
+    'reporting',
+    'investigation'
 ]
 
 MIDDLEWARE = [

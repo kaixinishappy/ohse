@@ -4,8 +4,8 @@
     "site_name": "Sunway Velocity Site A",
     "date_of_incident": "2025-07-30",
     "time_of_incident": "14:30:00",
-    "location": "Scaffolding Area, Level 3",
-    "description": "Worker slipped and fell while climbing the scaffold due to a loose plank.",
+    "location_of_incident": "Scaffolding Area, Level 3",
+    "description_of_incident": "Worker slipped and fell while climbing the scaffold due to a loose plank.",
     "incident_type": "Other",
     "other_incident_type": "Chemical Exposure",
     "incident_category": "Other",
@@ -51,6 +51,11 @@
     "name": "Lim Wei Sheng",
     "designation": "Foreman",
     "witness_statement": "I saw the injured worker lose balance while reaching for a tool. The surface appeared slippery."
+  },
+  "reporterInfo": {
+    "name": "kelly",
+    "designation": "HR Executive",
+    "employment_start_date": "2020-01-15"
   }
 }
 }

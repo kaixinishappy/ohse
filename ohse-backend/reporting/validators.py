@@ -6,7 +6,7 @@ from datetime import date
 from dateutil.parser import parse
 
 class ReportingFormSchemaValidator:
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         schema_path = os.path.join(os.path.dirname(__file__), 'schemas', 'reporting_form_schema.json')
         with open(schema_path) as f:
             self.schema = json.load(f)
@@ -25,5 +25,4 @@ class ReportingFormSchemaValidator:
 
         if value["medicalInfo"]['med_cert_start_date'] > value["medicalInfo"]['med_cert_end_date']:
             raise serializers.ValidationError("Medical cert start date cannot be after end date.")
-        
-        
+                
