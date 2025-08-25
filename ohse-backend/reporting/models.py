@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 from django.utils.translation import gettext_lazy as _
 from datetime import datetime
 
+from django.conf import settings
+User = settings.AUTH_USER_MODEL
+
 class IncidentStatus(models.TextChoices):
     PENDING_INVESTIGATION_REPORT = 'pending_investigation_report', _('Pending Investigation Report')
     UNDER_INVESTIGATION = 'under_investigation', _('Under Investigation')
@@ -24,7 +27,6 @@ class ApproverStatus(models.TextChoices):
 
 class ReportingForm(models.Model):
     # INCIDENT_STATUS_CHOICES = [
-    #     # ('none', 'None'),
     #     ('pending_investigation_report', 'Pending Investigation Report'), # Investigator hasn't submitted investigation report, only appear when approver has approved the report
     #     ('under_investigation', 'Under Investigation'), # Investigator has viewed the report
     #     ('report_pending_approval', 'Report Pending Approval'), # Waiting for GOHSE team/manager to review
