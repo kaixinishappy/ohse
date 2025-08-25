@@ -19,20 +19,6 @@ class Investigation(models.Model):
     
     investigation_form = models.JSONField()
 
-    # Multiple images
-    images = models.ManyToManyField(
-        "InvestigationImage",
-        blank=True,
-        related_name="investigation"
-    )
-
-    # Multiple attachments
-    attachments = models.ManyToManyField(
-        "InvestigationAttachment",
-        blank=True,
-        related_name="investigation"
-    )
-
     investigator = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -43,21 +29,29 @@ class Investigation(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f"Investigation - {self.investigation_id} - {self.report.incident_status}"
+        return f"Investigation {self.investigation_id} - {self.report.incident_status}"
+
+
 
 class InvestigationImage(models.Model):
-    image = models.ImageField(upload_to="media/investigation/images/")
+    investigation = models.ForeignKey("Investigation", on_delete=models.CASCADE, related_name="investigation_images")
+    image = models.ImageField(upload_to="investigation/images/")
     uploaded_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return os.path.basename(self.image.name) if self.image else "No Image(s) Uploaded"
 
+
+
 class InvestigationAttachment(models.Model):
-    file = models.FileField(upload_to="media/investigation/attachments/")
+    investigation = models.ForeignKey("Investigation", on_delete=models.CASCADE, related_name="investigation_attachments")
+    file = models.FileField(upload_to="investigation/attachments/")
     uploaded_at = models.DateTimeField(auto_now_add=True)
     
     def __str__(self):
         return os.path.basename(self.file.name) if self.file else "No File(s) Uploaded"
+
+
 
 class InvestigationComment(models.Model):
     investigation = models.ForeignKey('Investigation', on_delete=models.CASCADE, related_name='investigation_comments')

@@ -1,16 +1,23 @@
 import uuid
 import os
+
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils.translation import gettext_lazy as _
 
 User = get_user_model()
 
+class Status(models.TextChoices):
+    PENDING_SUPPORT = 'pending_support', _('Pending Support From OHSE')
+    IN_PROGRESS = 'in_progress', _('Working In Progress')
+    CLOSED = 'closed', _('Closed')
+
 class Enquiry(models.Model):
-    STATUS_CHOICES = [
-        ('pending_support', 'Pending Support From OHSE'), # Status once submitted
-        ('in_progress', 'Working In Progress'), # Status once GOHSE Team/Manager is viewing
-        ('closed', 'Closed'), # Status once the enquiry is resolved
-    ]
+    # STATUS_CHOICES = [
+    #     ('pending_support', 'Pending Support From OHSE'), # Status once submitted
+    #     ('in_progress', 'Working In Progress'), # Status once GOHSE Team/Manager is viewing
+    #     ('closed', 'Closed'), # Status once the enquiry is resolved
+    # ]
 
     # enquiry_id = models.UUIDField(
     #     primary_key=True,
@@ -28,24 +35,10 @@ class Enquiry(models.Model):
     # Input based on defined JSON schema
     enquiry_form = models.JSONField()
 
-    # Multiple images
-    images = models.ManyToManyField(
-        "EnquiryImage",
-        blank=True,
-        related_name="enquiries"
-    )
-
-    # Multiple attachments
-    attachments = models.ManyToManyField(
-        "EnquiryAttachment",
-        blank=True,
-        related_name="enquiries"
-    )
-
     status = models.CharField(
         max_length=50,
-        choices=STATUS_CHOICES,
-        default='pending'
+        choices=Status.choices,
+        default=Status.PENDING_SUPPORT
     )
 
     # Reporter
@@ -71,24 +64,27 @@ class Enquiry(models.Model):
     def __str__(self):
         return f"Enquiry {self.enquiry_id} - {self.status}"
 
+
+
 class EnquiryImage(models.Model):
-    image = models.ImageField(upload_to="media/enquiries/images/")
+    enquiry = models.ForeignKey("Enquiry", on_delete=models.CASCADE, related_name="enquiry_images")
+    image = models.ImageField(upload_to="enquiries/images/")
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
-    # def __str__(self):
-    #     return f"Image {self.id}"
-    
-    # Display the filename instead of id
     def __str__(self):
         return os.path.basename(self.image.name) if self.image else "No Image(s) Uploaded"
 
+
+
 class EnquiryAttachment(models.Model):
-    file = models.FileField(upload_to="media/enquiries/attachments/")
+    enquiry = models.ForeignKey("Enquiry", on_delete=models.CASCADE, related_name="enquiry_attachments")
+    file = models.FileField(upload_to="enquiries/attachments/")
     uploaded_at = models.DateTimeField(auto_now_add=True)
     
     # Display the filename instead of id
     def __str__(self):
         return os.path.basename(self.file.name) if self.file else "No File(s) Uploaded"
+
 
 
 # Comment section for by GOHSE Team/Manager if they reject the enquiry

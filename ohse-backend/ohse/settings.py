@@ -42,7 +42,8 @@ INSTALLED_APPS = [
 
     'enquiry',
     'reporting',
-    'investigation'
+    'investigation',
+    'users'
 ]
 
 MIDDLEWARE = [

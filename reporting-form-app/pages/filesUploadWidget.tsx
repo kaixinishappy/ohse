@@ -1,3 +1,13 @@
+// Allows uploading multiple image files at once.
+// Accepts only image file types (jpeg, png, gif, webp, bmp, svg).
+// Validates file type and size (max 10MB per file).
+// Displays error messages for invalid files or upload errors.
+// Shows a list of uploaded files with their names.
+// Lets users delete individual uploaded files.
+// Displays upload status and feedback (number of images uploaded).
+// Converts files to base64 format for form submission.
+// Updates the form data and internal state when files are added or removed.
+
 import React from 'react';
 import { WidgetProps } from '@rjsf/utils';
 
