@@ -5,6 +5,7 @@ from users.models import UserRole
 class Command(BaseCommand):
     help = "Create groups for each user role"
 
+    # Create groups for each user role
     def handle(self, *args, **kwargs):
         for role, _ in UserRole.choices:
             group, created = Group.objects.get_or_create(name=role)

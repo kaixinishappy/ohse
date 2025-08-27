@@ -1,0 +1,16 @@
+Dear Sir/Madam,
+
+{{ victim_name }} incident case is due for approval.
+Please click the link to see details and approve --> {{ approver_link }}
+Please click the link to view details --> {{ detail_link }}
+
+Thank you.
+
+This is an auto-generated email. Please do not reply to this message.
+
+Need help?
+You may contact us via Microsoft Teams during the following hours:
+Monday to Friday, 9:00 AM to 5:00 PM (GMT+08)
+1. natashaa@sunway.com.my
+2. nurulsa@sunway.com.my
+3. sharonyt@sunway.com.my

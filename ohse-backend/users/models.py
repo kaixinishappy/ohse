@@ -5,7 +5,6 @@ from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.models import Group
 
-
 # Create your models here.
 
 class Location(models.TextChoices):
@@ -13,7 +12,7 @@ class Location(models.TextChoices):
 
 
 class Trainer(models.TextChoices):
-    JOHN_DOE = 'john_doe', _('John Doe')
+    OSH_COORDINATOR = 'osh_coordinator', _('OSH Coordinator') 
 
 
 class UserRole(models.TextChoices):
@@ -178,7 +177,9 @@ class FloorMarshall(models.Model):
     trainer = models.CharField(
         max_length=50, 
         choices=Trainer.choices,
-        default=Trainer.JOHN_DOE
+        null=True,
+        blank=True,
+        default=None
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
